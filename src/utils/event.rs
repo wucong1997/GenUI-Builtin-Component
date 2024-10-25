@@ -1,6 +1,3 @@
-use std::error::Error;
-
-use arboard::Clipboard;
 use makepad_widgets::{Actions, WidgetAction, WidgetUid};
 
 pub fn filter_widget_actions(
@@ -33,11 +30,6 @@ pub fn open_browser(url: &str) -> Result<(), std::io::Error> {
     open::that(url)
 }
 
-/// Copy the given value to the clipboard
-pub fn copy_to_clipboard(value: &str) -> Result<(), Box<dyn Error>>{
-    let mut clip_board = Clipboard::new()?;
-    clip_board.set_text(value).map_err(|e|e.into())
-}
 
 #[cfg(test)]
 mod e {

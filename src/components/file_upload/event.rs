@@ -1,7 +1,6 @@
 use std::path::PathBuf;
 
 use makepad_widgets::{ActionDefaultRef, DefaultNone, FingerUpEvent};
-use rfd::FileDialog;
 
 use crate::shader::manual::UploadMode;
 
@@ -42,6 +41,7 @@ pub struct GUploadClearParam {
     pub paths: Vec<PathBuf>,
 }
 
-pub fn new_file_dialog() -> FileDialog {
-    FileDialog::new()
+#[cfg(not(target_arch = "wasm32"))]
+pub fn new_file_dialog() -> rfd::FileDialog {
+    rfd::FileDialog::new()
 }
