@@ -254,6 +254,9 @@ impl GBreadCrumb {
     pub fn icon(&self) -> GSvgRef {
         self.gsvg(id!(icon))
     }
+    pub fn set_path(&mut self, path: Vec<String>) {
+        self.path = path;
+    }
 }
 
 impl GBreadCrumbRef {
@@ -286,6 +289,11 @@ impl GBreadCrumbRef {
             c_ref.path().clone()
         } else {
             vec![]
+        }
+    }
+    pub fn set_path(&self, path: Vec<String>) {
+        if let Some(mut c_ref) = self.borrow_mut() {
+            c_ref.set_path(path);
         }
     }
 }

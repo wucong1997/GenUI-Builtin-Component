@@ -209,7 +209,13 @@ impl Widget for GDropDown {
                 PopupMode::Popup | PopupMode::ToolTip => {
                     let area = self.area().rect(cx);
                     let angle_offset = self.position.angle_offset(area.size);
-                    popup_menu.draw_container(cx, scope, Some(self.position.clone()), angle_offset, &mut self.redraw_flag);
+                    popup_menu.draw_container(
+                        cx,
+                        scope,
+                        Some(self.position.clone()),
+                        angle_offset,
+                        &mut self.redraw_flag,
+                    );
                     let container = popup_menu.container_area().rect(cx);
                     let mut shift = match self.position {
                         Position::Bottom => DVec2 {
@@ -273,8 +279,13 @@ impl Widget for GDropDown {
                     popup_menu.end(cx, scope, Area::Empty, DVec2::default());
                 }
                 PopupMode::Drawer => {
-                    let _ =
-                        popup_menu.draw_container_drawer(cx, scope, self.position, self.proportion, &mut self.redraw_flag);
+                    let _ = popup_menu.draw_container_drawer(
+                        cx,
+                        scope,
+                        self.position,
+                        self.proportion,
+                        &mut self.redraw_flag,
+                    );
                     popup_menu.end(cx, scope, Area::Empty, DVec2::default());
                 }
             }
@@ -289,8 +300,17 @@ impl Widget for GDropDown {
             let popup_menu = map.get_mut(&self.popup.unwrap()).unwrap();
             popup_menu.handle_event_with(cx, event, scope, self.area());
             if let Event::MouseDown(e) = event {
-                let is_in = popup_menu.menu_contains_pos(cx, e.abs);
-                self.close_inner(cx, GDropDownToggleKind::Other, is_in);
+                match self.mode {
+                    PopupMode::Popup | PopupMode::ToolTip => {
+                        let is_in = popup_menu.menu_contains_pos(cx, e.abs);
+                        self.close_inner(cx, GDropDownToggleKind::Other, is_in);
+                    }
+
+                    PopupMode::Dialog | PopupMode::Drawer => {
+                        let is_in = popup_menu.container_contains_pos(cx, e.abs);
+                        self.close_inner(cx, GDropDownToggleKind::Other, is_in);
+                    }
+                }
                 return;
             }
         }

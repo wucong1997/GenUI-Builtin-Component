@@ -149,7 +149,7 @@ pub struct GButton {
     #[redraw]
     #[live]
     pub slot: WidgetRef,
-    #[live(true)]
+    #[live(false)]
     pub grab_key_focus: bool,
     // animator -----------------
     #[live(true)]
@@ -221,7 +221,7 @@ impl Widget for GButton {
 }
 
 impl LiveHook for GButton {
-    fn after_apply(&mut self, cx: &mut Cx, _apply: &mut Apply, _index: usize, _nodes: &[LiveNode]) {
+    fn after_apply_from_doc(&mut self, cx:&mut Cx) {
         if !self.visible {
             return;
         }

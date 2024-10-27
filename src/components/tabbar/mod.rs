@@ -41,6 +41,8 @@ impl Widget for GTabbar {
 impl LiveHook for GTabbar {
     fn after_apply(&mut self, cx: &mut Cx, apply: &mut Apply, index: usize, nodes: &[LiveNode]) {
         self.deref_widget.after_apply(cx, apply, index, nodes);
+    }
+    fn after_apply_from_doc(&mut self, cx: &mut Cx) {
         if self.selected < 0 {
             let _ = self.find_selected(cx);
         } else {

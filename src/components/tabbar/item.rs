@@ -111,7 +111,7 @@ pub struct GTabbarItem {
     pub layout: Layout,
     #[live]
     pub cursor: Option<MouseCursor>,
-    #[live(true)]
+    #[live(false)]
     pub grab_key_focus: bool,
     // visible -------------------
     #[live(true)]
@@ -161,7 +161,7 @@ impl Widget for GTabbarItem {
                 }
                 if !self.selected {
                     // self.play_animation(cx, id!(hover.focus));
-                    self.animate_focus_on(cx); 
+                    self.animate_focus_on(cx);
                 }
             }
             Hit::FingerHoverIn(e) => {
@@ -190,7 +190,7 @@ impl Widget for GTabbarItem {
 }
 
 impl LiveHook for GTabbarItem {
-    fn after_apply(&mut self, cx: &mut Cx, _apply: &mut Apply, _index: usize, _nodes: &[LiveNode]) {
+    fn after_apply_from_doc(&mut self, cx: &mut Cx) {
         if !self.visible {
             return;
         }
