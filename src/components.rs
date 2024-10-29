@@ -846,26 +846,23 @@ live_design! {
         }
     }
     GCollapse = <GCollapseBase>{
-        height: Fit,
-        width: Fill,
-        flow: Down,
-        opened: false,
-        header: <GView>{
-            height: 24.0,
-            padding: {left: 6.0, right: 6.0, top: 3.0, bottom: 3.0},
-            flow: Right,
+        
+        header: <GHLayout>{
+            background_visible: true,
+            height: Fit,
+            padding: {left: 8.0, right: 8.0, top: 4.0, bottom: 4.0},
             align: <ALIGN_LEFT_WALK>{},
-            spacing: 6.0,
+            spacing: 8.0,
             margin: 0.0,
             border_radius: 0.0,
         },
-        body: <GView>{
-            height: 80.0,
+        body: <GVLayout>{
+            background_visible: true,
+            height: Fit,
             width: Fill,
-            padding: {left: 6.0, right: 6.0, top: 3.0, bottom: 3.0},
+            padding: {left: 8.0, right: 8.0, top: 4.0, bottom: 4.0},
             margin: 0.0,
             border_radius: 0.0,
-
         }
     }
     GTCell = <GTableCellBase>{

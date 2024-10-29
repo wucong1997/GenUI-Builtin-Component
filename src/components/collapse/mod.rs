@@ -19,6 +19,10 @@ live_design! {
     import makepad_draw::shader::std::*;
     GLOBAL_DURATION = 0.25;
     GCollapseBase = {{GCollapse}}{
+        height: Fit,
+        width: Fill,
+        flow: Down,
+        opened: false,
         animator: {
             open = {
                 default: off
@@ -92,7 +96,7 @@ pub struct GCollapse {
 }
 
 impl Widget for GCollapse {
-    fn draw_walk(&mut self, cx: &mut Cx2d, scope: &mut Scope, walk: Walk) -> DrawStep {
+    fn draw_walk(&mut self, cx: &mut Cx2d, scope: &mut Scope, mut walk: Walk) -> DrawStep {
         if !self.visible {
             return DrawStep::done();
         }
@@ -120,7 +124,43 @@ impl Widget for GCollapse {
 
         self.layout.flow = flow;
         if self.draw_state.begin(cx, steps[0]) {
-            cx.begin_turtle(walk, self.layout);
+            if !self.opened {
+                match self.position {
+                    Position4::Left | Position4::Right => {
+                        if !walk.width.is_fixed() {
+                            walk.width = header_walk.width;
+                        }
+                    }
+                    Position4::Top | Position4::Bottom => {
+                        if !walk.height.is_fixed() {
+                            walk.height = header_walk.height;
+                        }
+                    }
+                }
+
+                cx.begin_turtle(walk, self.layout);
+            } else {
+                match self.position {
+                    Position4::Left | Position4::Right => {
+                        if !walk.width.is_fixed() {
+                            walk.width = Size::Fill;
+                        }
+                    }
+                    Position4::Top | Position4::Bottom => {
+                        if !walk.height.is_fixed() {
+                            walk.height = Size::Fill;
+                        }
+                    }
+                }
+
+                // // if is opened, walk should be Fill
+                // let walk = if walk.height.is_fixed() {
+                //     walk
+                // } else {
+                //     Walk::fill()
+                // };
+                cx.begin_turtle(walk, self.layout);
+            }
         }
 
         for (index, _) in steps.iter().enumerate() {
