@@ -6,7 +6,7 @@ pub use register::register;
 use std::{path::PathBuf, str::FromStr};
 
 use makepad_widgets::*;
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(not(any(target_env = "ohos", target_arch = "wasm32")))]
 use rfd::FileDialog;
 
 use crate::{
@@ -201,7 +201,7 @@ impl GUpload {
                     }),
                 );
                 // call system file picker
-                #[cfg(not(target_arch = "wasm32"))]
+                #[cfg(not(any(target_env = "ohos", target_arch = "wasm32")))]
                 let mut f_upload = || {
                     let f = FileDialog::new()
                         .add_filter("allow", &self.filters)
@@ -230,7 +230,7 @@ impl GUpload {
                         }
                     }
                 };
-                #[cfg(not(target_arch = "wasm32"))]
+                #[cfg(not(any(target_env = "ohos", target_arch = "wasm32")))]
                 f_upload();
 
                 // call after selected

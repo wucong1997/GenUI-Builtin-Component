@@ -9,8 +9,8 @@ use types::LinkType;
 use crate::shader::draw_link::DrawGLink;
 use crate::shader::draw_text::DrawGText;
 use crate::themes::Themes;
-#[cfg(not(target_arch = "wasm32"))]
-use crate::utils::open_browser;
+// #[cfg(not(any(target_env = "ohos", target_arch = "wasm32")))]
+// use crate::utils::open_browser;
 use crate::utils::{get_font_family, set_cursor, BoolToF32, ThemeColor};
 use crate::{
     active_event, animatie_fn, default_handle_animation, default_hit_finger_down,
@@ -503,8 +503,8 @@ impl GLink {
                     }
 
                     let _ = self.href.as_ref().map(|x| {
-                        #[cfg(not(target_arch = "wasm32"))]
-                        open_browser(&x)
+                        // #[cfg(not(any(target_env = "ohos", target_arch = "wasm32")))]
+                        // open_browser(&x)
                     });
 
                     cx.widget_action(

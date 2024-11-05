@@ -41,7 +41,7 @@ pub struct GUploadClearParam {
     pub paths: Vec<PathBuf>,
 }
 
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(not(any(target_env = "ohos", target_arch = "wasm32")))]
 pub fn new_file_dialog() -> rfd::FileDialog {
     rfd::FileDialog::new()
 }

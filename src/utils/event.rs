@@ -25,10 +25,10 @@ pub fn filter_widget_actions(
 
 /// Open the given url in the default browser
 /// This function is not available in wasm32 target
-#[cfg(not(target_arch = "wasm32"))]
-pub fn open_browser(url: &str) -> Result<(), std::io::Error> {
-    open::that(url)
-}
+// #[cfg(not(target_arch = "wasm32"))]
+// pub fn open_browser(url: &str) -> Result<(), std::io::Error> {
+//     open::that(url)
+// }
 
 
 #[cfg(test)]
